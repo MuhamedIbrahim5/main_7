@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار النظام</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a4d5c 0%, #0d6d7f 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            color: #0a4d5c;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .test-section h2 {
+            color: #0a4d5c;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .test-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .test-label {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .test-value {
+            color: #666;
+            font-family: monospace;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #0a4d5c 0%, #0d6d7f 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(10, 77, 92, 0.4);
+        }
+        
+        .links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .link-btn {
+            display: block;
+            padding: 15px;
+            background: #f8f9fa;
+            color: #0a4d5c;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .link-btn:hover {
+            background: #0a4d5c;
+            color: white;
+            border-color: #0a4d5c;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 اختبار نظام الإدارة</h1>
+        
+        <div class="test-section">
+            <h2>📊 حالة النظام</h2>
+            <div class="test-item">
+                <span class="test-label">حالة تحميل البيانات:</span>
+                <span class="status loading" id="dataStatus">جاري التحميل...</span>
+            </div>
+            <div class="test-item">
+                <span class="test-label">ملف data.json:</span>
+                <span class="status loading" id="fileStatus">جاري الفحص...</span>
+            </div>
+            <div class="test-item">
+                <span class="test-label">ملف get-data.php:</span>
+                <span class="status loading" id="phpStatus">جاري الفحص...</span>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📞 بيانات التواصل</h2>
+            <div class="test-item">
+                <span class="test-label">واتساب:</span>
+                <span class="test-value" id="whatsapp">-</span>
+            </div>
+            <div class="test-item">
+                <span class="test-label">حجوزات:</span>
+                <span class="test-value" id="bookings">-</span>
+            </div>
+            <div class="test-item">
+                <span class="test-label">مقترحات:</span>
+                <span class="test-value" id="suggestions">-</span>
+            </div>
+            <div class="test-item">
+                <span class="test-label">بريد:</span>
+                <span class="test-value" id="email">-</span>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📦 عدد الباقات</h2>
+            <div class="test-item">
+                <span class="test-label">برنامج الزيارة:</span>
+                <span class="test-value" id="madinahVisit">-</span>
+            </div>
+            <div class="test-item">
+                <span class="test-label">برنامج العمرة:</span>
+                <span class="test-value" id="umrah">-</span>
+            </div>
+            <div class="test-item">
+                <span class="test-label">سكن مكة:</span>
+                <span class="test-value" id="makkah">-</span>
+            </div>
+            <div class="test-item">
+                <span class="test-label">سكن المدينة:</span>
+                <span class="test-value" id="madinah">-</span>
+            </div>
+        </div>
+        
+        <button class="btn" onclick="testSystem()">🔄 إعادة الاختبار</button>
+        
+        <div class="links">
+            <a href="index.html" class="link-btn">🏠 الموقع الرئيسي</a>
+            <a href="admin.php" class="link-btn">🎛️ لوحة التحكم</a>
+            <a href="README-ADMIN.md" class="link-btn" target="_blank">📖 دليل الاستخدام</a>
+            <a href="QUICK-START.txt" class="link-btn" target="_blank">⚡ البدء السريع</a>
+        </div>
+        
+        <div class="test-section" id="rawData" style="display: none;">
+            <h2>📄 البيانات الخام</h2>
+            <pre id="jsonData"></pre>
+        </div>
+    </div>
+    
+    <script>
+        async function testSystem() {
+            // Reset statuses
+            document.getElementById('dataStatus').textContent = 'جاري التحميل...';
+            document.getElementById('dataStatus').className = 'status loading';
+            document.getElementById('fileStatus').textContent = 'جاري الفحص...';
+            document.getElementById('fileStatus').className = 'status loading';
+            document.getElementById('phpStatus').textContent = 'جاري الفحص...';
+            document.getElementById('phpStatus').className = 'status loading';
+            
+            try {
+                // Test get-data.php
+                const response = await fetch('get-data.php');
+                
+                if (!response.ok) {
+                    throw new Error('فشل تحميل البيانات');
+                }
+                
+                const data = await response.json();
+                
+                // Update statuses
+                document.getElementById('dataStatus').textContent = '✅ تم التحميل بنجاح';
+                document.getElementById('dataStatus').className = 'status success';
+                document.getElementById('fileStatus').textContent = '✅ موجود';
+                document.getElementById('fileStatus').className = 'status success';
+                document.getElementById('phpStatus').textContent = '✅ يعمل';
+                document.getElementById('phpStatus').className = 'status success';
+                
+                // Update contact info
+                if (data.contact) {
+                    document.getElementById('whatsapp').textContent = '+' + data.contact.whatsapp;
+                    document.getElementById('bookings').textContent = '+' + data.contact.bookings;
+                    document.getElementById('suggestions').textContent = '+' + data.contact.suggestions;
+                    document.getElementById('email').textContent = data.contact.email;
+                }
+                
+                // Update package counts
+                if (data.packages) {
+                    document.getElementById('madinahVisit').textContent = data.packages.madinah_visit?.length || 0;
+                    document.getElementById('umrah').textContent = data.packages.umrah_program?.length || 0;
+                    document.getElementById('makkah').textContent = data.packages.makkah_hotel?.length || 0;
+                    document.getElementById('madinah').textContent = data.packages.madinah_hotel?.length || 0;
+                }
+                
+                // Show raw data
+                document.getElementById('rawData').style.display = 'block';
+                document.getElementById('jsonData').textContent = JSON.stringify(data, null, 2);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                
+                document.getElementById('dataStatus').textContent = '❌ فشل التحميل';
+                document.getElementById('dataStatus').className = 'status error';
+                document.getElementById('fileStatus').textContent = '❌ غير موجود';
+                document.getElementById('fileStatus').className = 'status error';
+                document.getElementById('phpStatus').textContent = '❌ لا يعمل';
+                document.getElementById('phpStatus').className = 'status error';
+                
+                alert('خطأ: ' + error.message + '\n\nتأكد من:\n1. رفع جميع الملفات\n2. تفعيل PHP على الاستضافة\n3. صلاحيات الملفات صحيحة');
+            }
+        }
+        
+        // Run test on page load
+        window.addEventListener('DOMContentLoaded', testSystem);
+    </script>
+</body>
+</html>
